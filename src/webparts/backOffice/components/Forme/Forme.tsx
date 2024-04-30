@@ -1,15 +1,20 @@
 import * as React from 'react';
 import { IFormProps, IFormData } from './IFormProps';
-import { submitForm, getFormData } from './FormeService';
+import { submitForm, getFormData, updateFormEntry, deleteFormEntry } from './FormeService';
+import styles from './Forme.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export const Forme: React.FC<IFormProps> = ({ context }) => {
   const [formData, setFormData] = React.useState<IFormData>({
+    id: 0,
     offre_title: '',
     short_description: '',
     deadline: new Date(),
     city: 'rabat',
     fileType: 'pdf',
     file: null,
+    fileName: '',
   });
 
   const [formEntries, setFormEntries] = React.useState<IFormData[]>([]);
@@ -49,40 +54,63 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
     e.preventDefault();
 
     try {
-      
-      await submitForm(formData);
+      if (formData.id) {
+        await updateFormEntry(formData.id, formData);
+      } else {
+        await submitForm(formData);
+      }
       setFormData({
+        id: 0,
         offre_title: '',
         short_description: '',
         deadline: new Date(),
         city: 'rabat',
         fileType: 'pdf',
         file: null,
+        fileName: '',
       });
       alert('Form submitted successfully!');
-      fetchFormData(); // Rafraîchir les données après la soumission du formulaire
+      fetchFormData();
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('An error occurred while submitting the form. Please try again.');
     }
   };
 
+  const handleEditEntry = (entry: IFormData) => {
+    setFormData(entry);
+  };
+
+  const handleDeleteEntry = async (id: number) => {
+    if (window.confirm('Are you sure you want to delete this entry?')) {
+      try {
+        await deleteFormEntry(id);
+        alert('Form entry deleted successfully!');
+        fetchFormData();
+      } catch (error) {
+        console.error('Error deleting form entry:', error);
+        alert('An error occurred while deleting the form entry. Please try again.');
+      }
+    }
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className={styles.backOfficeContainer}>
+      <h2>Back Office</h2>
+      <form className={styles.formContainer} onSubmit={handleSubmit}>
+        <div className={styles.inputField}>
           <label htmlFor="offre_title">Offre Title:</label>
           <input type="text" id="offre_title" name="offre_title" value={formData.offre_title} onChange={handleInputChange} required />
         </div>
-        <div>
+        <div className={styles.inputField}>
           <label htmlFor="short_description">Short Description:</label>
           <input type="text" id="short_description" name="short_description" value={formData.short_description} onChange={handleInputChange} required />
         </div>
-        <div>
+        <div className={styles.inputField}>
           <label htmlFor="deadline">Deadline:</label>
           <input type="date" id="deadline" name="deadline" value={formData.deadline.toISOString().split('T')[0]} onChange={handleInputChange} required />
         </div>
-        <div>
+        <div className={styles.inputField}>
           <label htmlFor="city">City:</label>
           <select name="city" value={formData.city} onChange={handleInputChange} required>
             <option value="rabat">Rabat</option>
@@ -90,7 +118,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
             <option value="rabat&fes">Rabat & Fes</option>
           </select>
         </div>
-        <div>
+        <div className={styles.inputField}>
           <label>File Type:</label>
           <select name="fileType" value={formData.fileType} onChange={handleInputChange} required>
             <option value="pdf">PDF</option>
@@ -98,7 +126,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
             <option value="xlsx">XLSX</option>
           </select>
         </div>
-        <div>
+        <div className={styles.inputField}>
           <label>Upload File:</label>
           <input type="file" accept=".pdf,.docx,.xlsx" onChange={handleFileChange} required />
         </div>
@@ -106,8 +134,8 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
           <button type="submit">Submit</button>
         </div>
       </form>
-  
-      <h2>Form Entries:</h2>
+
+      <h3>Internal Recrutements</h3>
       <table>
         <thead>
           <tr>
@@ -116,6 +144,8 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
             <th>Deadline</th>
             <th>City</th>
             <th>File Type</th>
+            <th>File </th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -126,13 +156,29 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
               <td>{entry.deadline.toLocaleDateString()}</td>
               <td>{entry.city}</td>
               <td>{entry.fileType}</td>
+              <td>
+                {entry.fileUrl ? (
+                  <span
+                    style={{ textDecoration: 'underline', color: 'blue', cursor: 'pointer' }}
+                    onClick={() => window.open(entry.fileUrl, '_blank')}
+                  >
+                    fichier
+                  </span>
+                ) : (
+                  '-'
+                )}
+              </td>
+              <td>
+                <button onClick={() => handleEditEntry(entry)}>Update</button>
+                <span className={styles.iconSpace}></span>
+                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDeleteEntry(entry.id)} />
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
   );
-  
 };
 
 export default Forme;

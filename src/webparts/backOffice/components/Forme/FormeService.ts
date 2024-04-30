@@ -3,11 +3,9 @@ import { IFormData } from './IFormProps';
 
 export const submitForm = async (formData: IFormData) => {
   try {
-    // Upload file to "Assets" document library
     const fileItem = await sp.web.lists.getByTitle('BackOfficeV0').rootFolder.files.add(formData.file!.name, formData.file!, true);
     const fileUrl = fileItem.data.ServerRelativeUrl;
 
-    // Store form data in SharePoint list
     const list = sp.web.lists.getByTitle('BackOfficeV1');
     await list.items.add({
       offre_title: formData.offre_title, 
@@ -26,20 +24,49 @@ export const submitForm = async (formData: IFormData) => {
 export const getFormData = async (): Promise<IFormData[]> => {
     try {
         const list = sp.web.lists.getByTitle('BackOfficeV1');
-        const items = await list.items.select('Id', 'offre_title', 'short_description', 'deadline', 'city', 'fileType').get();
+        const items = await list.items.select('Id', 'offre_title', 'short_description', 'deadline', 'city', 'fileType', 'fileUrl').get();
         return items.map((item: any) => ({
-            id: item.Id, // Ajoutez l'ID
+            id: item.Id,
             offre_title: item.offre_title,
             short_description: item.short_description,
             deadline: new Date(item.deadline),
             city: item.city,
             fileType: item.fileType,
-            file: null, // Ajoutez une valeur par défaut pour file
-            fileUrl: '', // Ajoutez une valeur par défaut pour fileUrl
+            file: null,
+            fileUrl: item.fileUrl,
+            fileName: item.fileName, 
+
         }));
     } catch (error) {
         console.error('Error fetching form data:', error);
         throw new Error('An error occurred while fetching form data. Please try again.');
     }
 };
+
+
+export const updateFormEntry = async (id: number, formData: IFormData) => {
+    try {
+      const list = sp.web.lists.getByTitle('BackOfficeV1');
+      await list.items.getById(id).update({
+        offre_title: formData.offre_title, 
+        short_description: formData.short_description, 
+        deadline: formData.deadline, 
+        city: formData.city, 
+        fileType: formData.fileType
+      });
+    } catch (error) {
+      console.error('Error updating form entry:', error);
+      throw new Error('An error occurred while updating the form entry. Please try again.');
+    }
+  };
+
+  export const deleteFormEntry = async (id: number) => {
+    try {
+      const list = sp.web.lists.getByTitle('BackOfficeV1');
+      await list.items.getById(id).delete();
+    } catch (error) {
+      console.error('Error deleting form entry:', error);
+      throw new Error('An error occurred while deleting the form entry. Please try again.');
+    }
+  };
 
