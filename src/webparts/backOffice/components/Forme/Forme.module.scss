@@ -1,0 +1,37 @@
+/* Form container */
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  /* Form fields */
+  .form-container label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-container input[type="text"],
+  .form-container input[type="email"],
+  .form-container select,
+  .form-container input[type="file"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Submit button */
+  .form-container button[type="submit"] {
+    background-color: #0078d4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-container button[type="submit"]:hover {
+    background-color: #005a9e;
+  }
+  
