@@ -34,11 +34,21 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name === 'deadline') {
+      // Conversion de la date en format ISO
+      const date = new Date(value);
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: date, // Assurez-vous de passer l'objet Date ici
+      }));
+    } else {
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
+  
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {

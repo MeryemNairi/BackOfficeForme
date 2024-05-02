@@ -10,7 +10,7 @@ export const submitForm = async (formData: IFormData) => {
     await list.items.add({
       offre_title: formData.offre_title, 
       short_description: formData.short_description, 
-      deadline: formData.deadline, 
+      deadline: formData.deadline.toISOString(),
       city: formData.city, 
       fileType: formData.fileType, 
       fileUrl: fileUrl,
