@@ -4,6 +4,8 @@ import { submitForm, getFormData, updateFormEntry, deleteFormEntry } from './For
 import styles from './Forme.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+
 
 export const Forme: React.FC<IFormProps> = ({ context }) => {
   const [formData, setFormData] = React.useState<IFormData>({
@@ -48,7 +50,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
       }));
     }
   };
-  
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -105,23 +107,46 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
   };
 
   return (
-    <div className={styles.backOfficeContainer}>
-      <h2>Back Office</h2>
+    <div className={styles.backOfficeContainer} style={{ position: 'relative' }}>
+    <svg
+      width="20%" // Largeur à 100% de la largeur du conteneur parent
+      height="20%" // Hauteur à 100% de la hauteur du conteneur parent
+      viewBox="0 0 526 525"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{
+        top: 0,
+        left: 20,
+        zIndex: -1, // Assurez-vous que le fond SVG est placé en arrière-plan
+      }}
+    >
+      <rect x="350" width="175" height="175" rx="87.5" fill="#00AB84" />
+      <rect y="350" width="175" height="175" rx="87.5" fill="#00AB84" />
+      <rect x="176" y="175" width="175" height="175" rx="87.5" fill="#00AB84" />
+      <path d="M175 0H350V175C253.35 175 175 96.6498 175 0Z" fill="#FEE45E" />
+      <path d="M175 175L175.152 350L0.15168 350.152C0.0679441 253.502 78.3502 175.084 175 175Z" fill="#FEE45E" />
+      <path d="M350 175H525V350C428.35 350 350 271.65 350 175Z" fill="#002920" />
+      <path d="M524.922 524.078L349.922 523.921L350.079 348.921C446.729 349.008 525.009 427.429 524.922 524.078Z" fill="#002920" />
+      <rect width="175" height="175" fill="#002920" />
+      <path d="M351 524L175 349V524H351Z" fill="#FFC46B" />
+    </svg>
+    
+    <h2>Back Office</h2>
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <div className={styles.inputField}>
-          <label htmlFor="offre_title">Offre Title:</label>
-          <input type="text" id="offre_title" name="offre_title" value={formData.offre_title} onChange={handleInputChange} required />
+          <h3 className={styles.inlineTitle}>Offre Title:</h3>
+          <input type="text" id="offre_title" name="offre_title" value={formData.offre_title} onChange={handleInputChange} className={styles.OffreTitle} />
         </div>
         <div className={styles.inputField}>
-          <label htmlFor="short_description">Short Description:</label>
-          <input type="text" id="short_description" name="short_description" value={formData.short_description} onChange={handleInputChange} required />
+          <h3 className={styles.inlineTitle}>Short Description:</h3>
+          <input type="text" id="short_description" name="short_description"  value={formData.short_description} onChange={handleInputChange} className={styles.ShortDescription} />
         </div>
         <div className={styles.inputField}>
-          <label htmlFor="deadline">Deadline:</label>
+          <h3 className={styles.inlineTitle}>Deadline:</h3>
           <input type="date" id="deadline" name="deadline" value={formData.deadline.toISOString().split('T')[0]} onChange={handleInputChange} required />
         </div>
         <div className={styles.inputField}>
-          <label htmlFor="city">City:</label>
+          <h3 className={styles.inlineTitle}>City:</h3>
           <select name="city" value={formData.city} onChange={handleInputChange} required>
             <option value="rabat">Rabat</option>
             <option value="fes">Fes</option>
@@ -129,7 +154,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
           </select>
         </div>
         <div className={styles.inputField}>
-          <label>File Type:</label>
+          <h3 className={styles.inlineTitle}>File Type:</h3>
           <select name="fileType" value={formData.fileType} onChange={handleInputChange} required>
             <option value="pdf">PDF</option>
             <option value="docx">DOCX</option>
@@ -137,15 +162,15 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
           </select>
         </div>
         <div className={styles.inputField}>
-          <label>Upload File:</label>
+          <h3 className={styles.inlineTitle}>Upload File:</h3>
           <input type="file" accept=".pdf,.docx,.xlsx" onChange={handleFileChange} required />
         </div>
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit" className={styles.button}>Submit</button>
         </div>
       </form>
 
-      <h3>Internal Recrutements</h3>
+      <h2>Internal Recruitments</h2>
       <table>
         <thead>
           <tr>
@@ -154,7 +179,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
             <th>Deadline</th>
             <th>City</th>
             <th>File Type</th>
-            <th>File </th>
+            <th>File</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -170,8 +195,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
                 {entry.fileUrl ? (
                   <span
                     style={{ textDecoration: 'underline', color: 'blue', cursor: 'pointer' }}
-                    onClick={() => window.open(entry.fileUrl, '_blank')}
-                  >
+                    onClick={() => window.open(entry.fileUrl, '_blank')}>
                     fichier
                   </span>
                 ) : (
@@ -179,10 +203,11 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
                 )}
               </td>
               <td>
-                <button onClick={() => handleEditEntry(entry)}>Update</button>
+                <FontAwesomeIcon icon={faEdit} onClick={() => handleEditEntry(entry)} style={{ color: 'blue', cursor: 'pointer' }} />
                 <span className={styles.iconSpace}></span>
-                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDeleteEntry(entry.id)} />
+                <FontAwesomeIcon icon={faTrash} onClick={() => handleDeleteEntry(entry.id)} style={{ color: 'black', cursor: 'pointer' }} />
               </td>
+
             </tr>
           ))}
         </tbody>

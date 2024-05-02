@@ -1,50 +1,97 @@
-/* Form container */
+/* styles.scss */
 
+/* Form container */
 .backOfficeContainer {
   background-color: #DFF9F1;
   padding: 20px;
 }
 
 .formContainer {
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
-.inputField {
-  color: #002920;
-  font-family: Montserrat, sans-serif;
-  margin-bottom: 10px; 
+/* Style pour le conteneur des champs sur la même ligne */
+.inlineField {
+  display: flex; /* Afficher les éléments en tant que flexbox */
+  align-items: center; /* Aligner les éléments verticalement au centre */
 }
 
-.inputField input,
-.inputField select {
-  width: 100%; 
-  text-align: left; 
-  padding: 0.5rem; 
+/* Style pour le titre */
+.inlineField h3 {
+  margin-right: 10px; /* Espacement entre le titre et le champ */
+  white-space: nowrap; /* Empêcher le retour à la ligne */
+}
+
+.inputField h3 {
+  color: #002920; /* Couleur pour les titres */
+  font-family: 'Montserrat', sans-serif; /* Style de police pour les titres */
 }
 
 
 /* Style pour les barres de saisie */
-.inputField input {
-  width: 100%; 
-  height: 40px; 
-  padding: 10px; 
-  font-size: 16px; 
-  box-sizing: border-box; 
+.inputField input[type="text"] {
+  width: calc(100% - 20px); /* Réduire la largeur de 20px par rapport à 100% */
+  height: 40px;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
   text-align: start;
 }
 
-.iconSpace {
-  margin-right: 9px; 
+.OffreTitle {
+  border: 1px solid #ccc; /* Ajoute une bordure de 1 pixel solide grise */
+  border-radius: 10px; /* Ajoute des coins arrondis */
+  padding: 8px; /* Ajoute un peu d'espace intérieur */
+  width: 250px; /* Réduit la largeur à 250px */
+  /* Ajoutez d'autres styles si nécessaire */
+}
+.ShortDescription {
+  height: 40px; /* Augmente la hauteur à 100px */
+  border: 1px solid #ccc; /* Ajoute une bordure de 1 pixel solide grise */
+  border-radius: 10px; /* Ajoute des coins arrondis */
+  padding: 8px; /* Ajoute un peu d'espace intérieur */
+  width: 250px; /* Réduit la largeur à 250px */
+  
 }
 
+
+:global {
+  .backgroundSVG {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Assurez-vous que le fond SVG est placé en arrière-plan */
+  }
+}
+
+
+.iconSpace {
+  margin-right: 9px;
+}
 
 .button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
+  background-color: #58C1A3; /* Nouvelle couleur de fond (vert) */
+  color: #ffffff; /* Nouvelle couleur du texte (blanc) */
+  border: none; /* Pas de bordure */
+  padding: 10px 20px; /* Espacement intérieur */
+  cursor: pointer; /* Curseur de type pointeur */
+  transition: background-color 0.3s; /* Animation de transition */
+  font-size: 14px; /* Taille du texte */
+  font-weight: bold; /* Texte en gras */
+  width: 140px; /* Largeur */
+  height: 35px; /* Hauteur */
+  display: block; /* Affichage en tant que bloc */
+  margin: 0 auto; /* Marge automatique pour centrer horizontalement */
 }
+
+.button:hover {
+  background-color: #58C1A3; /* Changement de couleur de fond au survol (vert plus foncé) */
+}
+
+.button:active {
+  background-color: #1e7e34; /* Changement de couleur de fond au clic (vert plus foncé) */
+}
+
 
 .tableContainer {
   margin-top: 20px;
@@ -71,4 +118,29 @@ tr:hover {
 .actionButtons {
   display: flex;
   justify-content: space-between;
+}
+
+.inlineTitle {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+
+/* Modifié: Couleur et style de police pour les titres */
+h2, h3 {
+  color: #044123;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Modifié: Style pour les options du sélecteur */
+select option {
+  background-color: #DFF9F1; /* Couleur de fond */
+  color: #002920; /* Couleur du texte */
+}
+
+/* Modifié: Style pour les bordures des cellules de la table */
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd; /* Ajout d'une bordure à droite */
 }
