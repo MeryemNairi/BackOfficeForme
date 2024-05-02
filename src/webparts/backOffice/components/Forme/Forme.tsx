@@ -110,9 +110,9 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
 
   return (
     <div className={styles.backOfficeContainer} style={{ position: 'relative' }}>
-      
+
       <div style={{ display: 'flex', alignItems: 'center' }}>
-      
+
         <svg
           width="60%"
           height="60%"
@@ -129,13 +129,13 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
           <path d="M350 175H525V350C428.35 350 350 271.65 350 175Z" fill="#002920" />
           <path d="M524.922 524.078L349.922 523.921L350.079 348.921C446.729 349.008 525.009 427.429 524.922 524.078Z" fill="#002920" />
           <rect width="175" height="175" fill="#002920" />
-          <path d="M351 524L175 349V524H351Z" fill="#FFC46B" />  
-                </svg>
-          <div>
+          <path d="M351 524L175 349V524H351Z" fill="#FFC46B" />
+        </svg>
+        <div>
           <h2 style={{ fontFamily: 'Montserrat', fontSize: '40px', fontWeight: 600, lineHeight: '97.52px', textAlign: 'left', marginBottom: '10px' }}>Gestion des Offres d'Emploi</h2>
           <p style={{ fontFamily: 'Montserrat', fontSize: '16px' }}>Bienvenue sur notre plateforme de gestion des offres d'emploi. Ici, vous pouvez facilement saisir, modifier et gérer toutes les offres d'emploi que votre entreprise propose.
 
-</p>
+          </p>
         </div>
       </div>
       <form className={styles.formContainer} onSubmit={handleSubmit}>
@@ -185,6 +185,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
             <th>Deadline</th>
             <th>City</th>
             <th>File Type</th>
+            <th>FileName</th>
             <th>File</th>
             <th>Action</th>
           </tr>
@@ -197,6 +198,15 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
               <td>{entry.deadline.toLocaleDateString()}</td>
               <td>{entry.city}</td>
               <td>{entry.fileType}</td>
+              <td>
+                {entry.fileUrl ? (
+                  <p>
+                    {entry.fileUrl.substring(entry.fileUrl.lastIndexOf('/') + 1)}
+                  </p>
+                ) : (
+                  '-'
+                )}
+              </td>
               <td>
                 {entry.fileUrl ? (
                   <span
