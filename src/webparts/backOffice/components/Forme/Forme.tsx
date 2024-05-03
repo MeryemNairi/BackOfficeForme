@@ -3,11 +3,8 @@ import { IFormProps, IFormData } from './IFormProps';
 import { submitForm, getFormData, updateFormEntry, deleteFormEntry } from './FormeService';
 import styles from './Forme.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { AiOutlineFile } from 'react-icons/ai';
-
-
 
 export const Forme: React.FC<IFormProps> = ({ context }) => {
   const [formData, setFormData] = React.useState<IFormData>({
@@ -22,6 +19,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
   });
 
   const [formEntries, setFormEntries] = React.useState<IFormData[]>([]);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   React.useEffect(() => {
     fetchFormData();
@@ -30,7 +28,12 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
   const fetchFormData = async () => {
     try {
       const formData = await getFormData();
-      setFormEntries(formData);
+      // Extraire le nom de fichier à partir de l'URL et l'enregistrer dans fileName
+      const modifiedFormData = formData.map(entry => ({
+        ...entry,
+        fileName: entry.fileUrl ? entry.fileUrl.substring(entry.fileUrl.lastIndexOf('/') + 1) : ''
+      }));
+      setFormEntries(modifiedFormData);
     } catch (error) {
       console.error('Error fetching form data:', error);
     }
@@ -39,11 +42,10 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     if (name === 'deadline') {
-      // Conversion de la date en format ISO
       const date = new Date(value);
       setFormData(prevState => ({
         ...prevState,
-        [name]: date, // Assurez-vous de passer l'objet Date ici
+        [name]: date,
       }));
     } else {
       setFormData(prevState => ({
@@ -52,7 +54,6 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
       }));
     }
   };
-
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -66,6 +67,12 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       if (formData.id) {
@@ -88,6 +95,8 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('An error occurred while submitting the form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -110,10 +119,8 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
 
   return (
     <div className={styles.backOfficeContainer} style={{ position: 'relative' }}>
-
       <div style={{ display: 'flex', alignItems: 'center' }}>
-
-        <svg
+         <svg
           width="60%"
           height="60%"
           viewBox="0 0 526 525"
@@ -133,9 +140,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
         </svg>
         <div>
           <h2 style={{ fontFamily: 'Montserrat', fontSize: '40px', fontWeight: 600, lineHeight: '97.52px', textAlign: 'left', marginBottom: '10px' }}>Gestion des Offres d'Emploi</h2>
-          <p style={{ fontFamily: 'Montserrat', fontSize: '16px' }}>Bienvenue sur notre plateforme de gestion des offres d'emploi. Ici, vous pouvez facilement saisir, modifier et gérer toutes les offres d'emploi que votre entreprise propose.
-
-          </p>
+          <p style={{ fontFamily: 'Montserrat', fontSize: '16px' }}>Bienvenue sur notre plateforme de gestion des offres d'emploi. Ici, vous pouvez facilement saisir, modifier et gérer toutes les offres d'emploi que votre entreprise propose.</p>
         </div>
       </div>
       <form className={styles.formContainer} onSubmit={handleSubmit}>
@@ -172,7 +177,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
           <input type="file" accept=".pdf,.docx,.xlsx" onChange={handleFileChange} required />
         </div>
         <div>
-          <button type="submit" className={styles.button}>Submit</button>
+          <button type="submit" className={styles.button} disabled={isSubmitting}>Submit</button>
         </div>
       </form>
 
@@ -198,15 +203,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
               <td>{entry.deadline.toLocaleDateString()}</td>
               <td>{entry.city}</td>
               <td>{entry.fileType}</td>
-              <td>
-                {entry.fileUrl ? (
-                  <p>
-                    {entry.fileUrl.substring(entry.fileUrl.lastIndexOf('/') + 1)}
-                  </p>
-                ) : (
-                  '-'
-                )}
-              </td>
+              <td>{entry.fileName}</td>
               <td>
                 {entry.fileUrl ? (
                   <span
@@ -229,7 +226,6 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
       </table>
     </div>
   );
-
 };
 
 export default Forme;

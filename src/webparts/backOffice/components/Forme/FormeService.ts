@@ -14,6 +14,8 @@ export const submitForm = async (formData: IFormData) => {
       city: formData.city, 
       fileType: formData.fileType, 
       fileUrl: fileUrl,
+      fileName: formData.file ? formData.file.name : '', // Enregistrer le nom de fichier s'il existe
+
     });
   } catch (error) {
     console.error('Error submitting form:', error);
@@ -22,25 +24,24 @@ export const submitForm = async (formData: IFormData) => {
 };
 
 export const getFormData = async (): Promise<IFormData[]> => {
-    try {
-        const list = sp.web.lists.getByTitle('BackOfficeV1');
-        const items = await list.items.select('Id', 'offre_title', 'short_description', 'deadline', 'city', 'fileType', 'fileUrl').get();
-        return items.map((item: any) => ({
-            id: item.Id,
-            offre_title: item.offre_title,
-            short_description: item.short_description,
-            deadline: new Date(item.deadline),
-            city: item.city,
-            fileType: item.fileType,
-            file: null,
-            fileUrl: item.fileUrl,
-            fileName: item.fileName, 
-
-        }));
-    } catch (error) {
-        console.error('Error fetching form data:', error);
-        throw new Error('An error occurred while fetching form data. Please try again.');
-    }
+  try {
+      const list = sp.web.lists.getByTitle('BackOfficeV1');
+      const items = await list.items.select('Id', 'offre_title', 'short_description', 'deadline', 'city', 'fileType', 'fileUrl', 'fileName').get();
+      return items.map((item: any) => ({
+          id: item.Id,
+          offre_title: item.offre_title,
+          short_description: item.short_description,
+          deadline: new Date(item.deadline),
+          city: item.city,
+          fileType: item.fileType,
+          file: null,
+          fileUrl: item.fileUrl,
+          fileName: item.fileName, 
+      }));
+  } catch (error) {
+      console.error('Error fetching form data:', error);
+      throw new Error('An error occurred while fetching form data. Please try again.');
+  }
 };
 
 
