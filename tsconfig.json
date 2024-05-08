@@ -13,6 +13,8 @@
     "outDir": "lib",
     "inlineSources": false,
     "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true, // Ajout de cette option
+
 
     "typeRoots": [
       "./node_modules/@types",
