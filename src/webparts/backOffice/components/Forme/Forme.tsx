@@ -38,21 +38,34 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    if (name === 'deadline') {
-      const date = new Date(value);
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: date,
-      }));
-    } else {
+    
+    // Vérifiez le type de l'élément cible
+    if (e.target instanceof HTMLInputElement) {
+      // Logique spécifique pour les input
+      if (name === 'deadline') {
+        const date = new Date(value);
+        setFormData(prevState => ({
+          ...prevState,
+          [name]: date,
+        }));
+      } else {
+        setFormData(prevState => ({
+          ...prevState,
+          [name]: value,
+        }));
+      }
+    } else if (e.target instanceof HTMLSelectElement || e.target instanceof HTMLTextAreaElement) {
+      // Logique spécifique pour les select et les textarea
       setFormData(prevState => ({
         ...prevState,
         [name]: value,
       }));
     }
   };
+  
+  
 
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,7 +143,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
                 </div>
                 <span>&nbsp;</span>
                 <div className={styles.inputField}>
-                  <input type="text2" id="short_description" name="short_description" value={formData.short_description} onChange={handleInputChange} placeholder="Short Description" style={{ backgroundColor: '#F5F9FF' }} className={styles.ShortDescription} />
+                  <textarea  id="short_description" name="short_description" value={formData.short_description} onChange={handleInputChange} placeholder="Short Description" style={{ backgroundColor: '#F5F9FF',width: '690px' ,height: '200px'}} className={styles.ShortDescription} />
                 </div>
                 <span>&nbsp;</span>
                 <div className={styles.inputContainer}>
