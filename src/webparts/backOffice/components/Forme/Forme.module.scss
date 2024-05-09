@@ -7,9 +7,63 @@
   margin-right: 10px; // Espace entre chaque champ
 }
 
+.inputField input,
+.inputField select {
+  width: 100%; /* Remplir la largeur disponible */
+  padding: 10px; /* Espacement interne */
+  border: 1px solid #ccc; /* Bordure grise */
+  border-radius: 5px; /* Coins arrondis */
+  outline: none; /* Supprimer la bordure bleue lorsque l'élément est sélectionné */
+}
+
+.inputField select {
+  background-color: #F5F9FF; /* Couleur de fond */
+}
+
+.inputField select option {
+  background-color: #fff; /* Couleur de fond des options */
+}
+
+.inputField select option:hover {
+  background-color: #F5F9FF; /* Couleur de fond au survol */
+}
+
+.inputField input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  /* Couleur de fond du calendrier */
+  background-color: #F5F9FF;
+}
+
+/* Pour colorer la flèche du calendrier */
+.inputField input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(50%); /* Inverse la couleur */
+}
+
+/* Pour colorer le bouton de rotation du calendrier (flèche) */
+.inputField input[type="date"]::-webkit-inner-spin-button {
+  filter: invert(50%); /* Inverse la couleur */
+}
+
+
+
 .formContainer1 {
   margin-bottom: 50px;
 }
+
+/* Afficher la liste des options en dessous du select */
+.inputField select {
+  position: relative;
+}
+
+.inputField select option {
+  position: absolute;
+  top: 100%;
+}
+
 
 .formContainer2 {
   background-color: #F5F9FF;

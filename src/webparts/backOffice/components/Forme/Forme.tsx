@@ -116,7 +116,6 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
       }
     }
   };
-
   return (
     <>
       <div style={{ width: '100%', maxWidth: '9000px', margin: '0 auto', padding: '0 20px' }}>
@@ -127,7 +126,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
             <div style={{ position: 'relative' }}>
               <form className={styles.formContainer1} onSubmit={handleSubmit}>
                 <div className={styles.inputField}>
-                  <input type="text1" id="offre_title" name="offre_title" value={formData.offre_title} onChange={handleInputChange} placeholder="Title" className={styles.OffreTitle} style={{ backgroundColor: '#F5F9FF' }} />
+                  <input type="text1" id="offre_title" name="offre_title" value={formData.offre_title} onChange={handleInputChange} placeholder="Title" className={styles.OffreTitle} style={{ backgroundColor: '#F5F9FF',height:'40px' }} />
                 </div>
                 <span>&nbsp;</span>
                 <div className={styles.inputField}>
@@ -136,7 +135,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
                 <span>&nbsp;</span>
                 <div className={styles.inputContainer}>
                   <div className={styles.inputField}>
-                    <svg width="25" height="25" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="55" height="55" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M3 13.5C3 10.671 3 9.258 3.879 8.379C4.758 7.5 6.171 7.5 9 7.5H27C29.829 7.5 31.242 7.5 32.121 8.379C33 9.258 33 10.671 33 13.5C33 14.2065 33 14.5605 32.781 14.781C32.5605 15 32.205 15 31.5 15H4.5C3.7935 15 3.4395 15 3.219 14.781C3 14.5605 3 14.205 3 13.5ZM3 27C3 29.829 3 31.242 3.879 32.121C4.758 33 6.171 33 9 33H27C29.829 33 31.242 33 32.121 32.121C33 31.242 33 29.829 33 27V19.5C33 18.7935 33 18.4395 32.781 18.219C32.5605 18 32.205 18 31.5 18H4.5C3.7935 18 3.4395 18 3.219 18.219C3 18.4395 3 18.795 3 19.5V27Z" fill="#627FA9" />
                       <path d="M10.5 4.5V9M25.5 4.5V9" stroke="#627FA9" strokeWidth="2" strokeLinecap="round" />
                     </svg>
@@ -150,7 +149,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
                     />
                   </div>
                   <div className={styles.inputField}>
-                    <svg width="20" height="20" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="45" height="45" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M20.5003 19.6457C19.3676 19.6457 18.2813 19.1957 17.4804 18.3948C16.6795 17.5938 16.2295 16.5075 16.2295 15.3748C16.2295 14.2421 16.6795 13.1558 17.4804 12.3549C18.2813 11.554 19.3676 11.104 20.5003 11.104C21.633 11.104 22.7193 11.554 23.5203 12.3549C24.3212 13.1558 24.7712 14.2421 24.7712 15.3748C24.7712 15.9357 24.6607 16.4911 24.4461 17.0092C24.2314 17.5274 23.9168 17.9982 23.5203 18.3948C23.1237 18.7914 22.6529 19.1059 22.1347 19.3206C21.6165 19.5352 21.0612 19.6457 20.5003 19.6457ZM20.5003 3.4165C17.3288 3.4165 14.2871 4.6764 12.0445 6.91902C9.80188 9.16164 8.54199 12.2033 8.54199 15.3748C8.54199 24.3436 20.5003 37.5832 20.5003 37.5832C20.5003 37.5832 32.4587 24.3436 32.4587 15.3748C32.4587 12.2033 31.1988 9.16164 28.9561 6.91902C26.7135 4.6764 23.6719 3.4165 20.5003 3.4165Z" fill="#627FA9" />
                     </svg>
                     <select
@@ -166,7 +165,7 @@ export const Forme: React.FC<IFormProps> = ({ context }) => {
 
                   </div>
                   <div className={styles.inputField}>
-                    <svg width="20" height="20" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="45" height="45" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fillRule="evenodd" clipRule="evenodd" d="M20.417 32.0832H14.5837C9.08428 32.0832 6.33387 32.0832 4.62616 30.374C2.91699 28.6663 2.91699 25.9159 2.91699 20.4165V14.5832C2.91699 9.0838 2.91699 6.33338 4.62616 4.62567C6.33387 2.9165 9.09887 2.9165 14.6274 2.9165C15.5112 2.9165 16.2184 2.9165 16.8149 2.9413C16.7959 3.05796 16.7857 3.17609 16.7857 3.29713L16.7712 7.43005C16.7712 9.02984 16.7712 10.4444 16.9243 11.5834C17.0905 12.8186 17.4712 14.0538 18.4803 15.063C19.4866 16.0692 20.7232 16.4513 21.9585 16.6175C23.0974 16.7707 24.512 16.7707 26.1118 16.7707H32.021C32.0837 17.5494 32.0837 18.5061 32.0837 19.7792V20.4165C32.0837 25.9159 32.0837 28.6663 30.3745 30.374C28.6668 32.0832 25.9164 32.0832 20.417 32.0832Z" fill="#627FA9" />
                       <path d="M28.2213 11.1082L22.4463 5.91219C20.8028 4.43198 19.9818 3.69115 18.9711 3.30469L18.958 7.29177C18.958 10.7291 18.958 12.4484 20.0255 13.5159C21.093 14.5834 22.8124 14.5834 26.2497 14.5834H31.4705C30.9426 13.5568 29.9947 12.7051 28.2213 11.1082Z" fill="#627FA9" />
                     </svg>

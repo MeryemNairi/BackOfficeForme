@@ -20,7 +20,7 @@ const Navbar: React.FC = () => {
         <nav className={`${styles.navbar}`}>
           <Link to="/CnexiaForEveryone" className={`${styles.logo} ` }>
 
-            <svg width="140" height="40" viewBox="0 0 342 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="160" height="60" viewBox="0 0 342 54" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M74.0716 16.3599V46.0464H67.1938L54.1548 30.2289V46.0464H45.9688V16.3599H52.8466L65.8855 32.1774V16.3599H74.0716Z" fill="#002920" />
               <path d="M103.69 39.5589V46.0464H79.9785V16.3599H103.142V22.8474H88.2466V27.8509H101.368V34.1258H88.2466V39.5545H103.69V39.5589Z" fill="#002920" />
               <path d="M114.618 23.0215H105.547V16.3647H132V23.0215H122.972V46.047H114.618V23.0215Z" fill="#002920" />
